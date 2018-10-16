@@ -26,12 +26,38 @@ code={"a":".-",
       "y":"-.--",
       "z":"--..",
       " ":" "}
+dcode=dict(zip(code.values(),code.keys()))
 while True:
-    string=input("please enter text")
-    output=""#initalise output
-    for i in string:#for every character
-        try:
-            output+=code[i]+"   "#find character in lookup table and add gap between character
-        except IndexError:#if the character isn't in table
-            print(i)#print it for debugging purposes
-    print(output.strip(" "))#print the encoded text and strip any trailing spaces
+    if input("from morse or text")=="text":
+        string=input("please enter text")
+        output=""#initalise output
+        for i in string:#for every character
+            try:
+                output+=code[i]+"   "#find character in lookup table and add gap between character
+            except KeyError:#if the character isn't in table
+                print(i)#print it for debugging purposes
+        print(output.strip(" "))#print the encoded text and strip any trailing spaces
+    else:
+        string=input("please enter morse")
+        output=""
+        spaces=0
+        character=""
+        for i in string:
+            if i ==" ":
+                spaces+=1
+                if spaces==3:
+                    try:
+                        output+=dcode[character]
+                    except KeyError:
+                        print(character)
+                    character=""
+            else:
+                if spaces==7:#space
+                    output+=" "
+                spaces=0
+                character+=i
+        if spaces<3:
+            output+=dcode[character]
+        elif spaces==7:
+            output+=" "
+        print(output)
