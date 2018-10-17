@@ -25,11 +25,11 @@ code={"a":".-",
       "x":"-..-",
       "y":"-.--",
       "z":"--..",
-      " ":" "}
+      " ":" "}#space uses the 3 spaces either side of the 1 space
 dcode=dict(zip(code.values(),code.keys()))
 while True:
     if input("from morse or text")=="text":
-        string=input("please enter text")
+        string=input("please enter text").lower()#convert to lower case
         output=""#initalise output
         for i in string:#for every character
             try:
