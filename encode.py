@@ -35,7 +35,7 @@ def encode(string):
         except KeyError:#if the character isn't in table
             print(i)#print it for debugging purposes
     return output.strip(" ")#return the encoded text and strip any trailing spaces
-def decode(morse):
+def decode(string):
     output=""
     spaces=0
     character=""
