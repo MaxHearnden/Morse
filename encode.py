@@ -34,7 +34,30 @@ def encode(string):
             output+=code[i]+"   "#find character in lookup table and add gap between character
         except KeyError:#if the character isn't in table
             print(i)#print it for debugging purposes
-    return output.strip(" ")#print the encoded text and strip any trailing spaces
+    return output.strip(" ")#return the encoded text and strip any trailing spaces
+def decode(morse):
+    output=""
+    spaces=0
+    character=""
+    for i in string:
+        if i ==" ":
+            spaces+=1
+            if spaces==3:
+                try:
+                    output+=dcode[character]
+                except KeyError:
+                    print(character)
+                character=""
+        else:
+            if spaces==7:#space
+                output+=" "
+            spaces=0
+            character+=i
+    if spaces<3:
+        output+=dcode[character]
+    elif spaces==7:
+        output+=" "
+    return output
 if __name__ == "__main__":
     while True:
         if input("from morse or text")=="text":
@@ -42,25 +65,4 @@ if __name__ == "__main__":
             print(encode(string))
         else:
             string=input("please enter morse")
-            output=""
-            spaces=0
-            character=""
-            for i in string:
-                if i ==" ":
-                    spaces+=1
-                    if spaces==3:
-                        try:
-                            output+=dcode[character]
-                        except KeyError:
-                            print(character)
-                        character=""
-                else:
-                    if spaces==7:#space
-                        output+=" "
-                    spaces=0
-                    character+=i
-            if spaces<3:
-                output+=dcode[character]
-            elif spaces==7:
-                output+=" "
-            print(output)
+            print(decode(string))
