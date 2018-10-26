@@ -29,7 +29,7 @@ code={"a":".-",
 dcode=dict(zip(code.values(),code.keys()))#create another dictionary, but this time the values are the keys and the keys are the values
 def encode(string):
     output=""#initalise output
-    for i in string:#for every character
+    for i in string.lower():#for every character(converted to lower case)
         try:
             output+=code[i]+"   "#find character in lookup table and add gap between character
         except KeyError:#if the character isn't in table
@@ -61,7 +61,7 @@ def decode(string):
 if __name__ == "__main__":
     while True:
         if input("from morse or text")=="text":
-            string=input("please enter text").lower()#convert to lower case
+            string=input("please enter text")
             print(encode(string))
         else:
             string=input("please enter morse")
