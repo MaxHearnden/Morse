@@ -1,3 +1,5 @@
+#coding: utf-8
+#allowed code to be run outside of idle
 code={"a":".-",
       "b":"-...",
       "c":"-.-.",
@@ -25,7 +27,30 @@ code={"a":".-",
       "x":"-..-",
       "y":"-.--",
       "z":"--..",
-      " ":" "}#space uses the 3 spaces either side of the 1 space
+      " ":" ",#space uses the 3 spaces either side of the 1 space, timing is Rec. ITU-R M.1677-1 2 compliant
+      "1":".----",
+      "2":"..---",
+      "3":"...--",
+      "4":"....-",
+      "5":".....",
+      "6":"-....",
+      "7":"--...",
+      "8":"---..",
+      "9":"----.",
+      "0":"-----",
+      ".":".-.-.-",
+      ",":"--..--",
+      ":":"---...",
+      "?":"..--..",
+      "'":".----.",
+      "-":"-....-",
+      "/":"-..-.",
+      "(":"-.--.",
+      ")":"-.--.-",
+      '"':".-..-.",
+      "=":"-...-",
+      "+":".-.-.",
+      "@":".--.-."}#Rec. ITU-R M.1677-1 1.1.2 and 1.1.3 compliant morse code characters
 dcode=dict(zip(code.values(),code.keys()))#create another dictionary, but this time the values are the keys and the keys are the values
 def encode(string):
     output=""#initalise output
