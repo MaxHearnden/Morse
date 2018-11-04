@@ -18,7 +18,13 @@ while True:
             state="e encode"
         else:
             t_sign=input("enter target callsign")
-            state="call"
+            if t_sign:
+                state="call"
+            else:
+                state="clisten"
+    elif state=="clisten":#listen for callsign
+        reply=encode.decode(io.listen())
+        state="reply"
     elif state=="m encode":#main.py encode
         if input("do you want to convert from morse or text ")=="text":
             text=input("enter text ")
@@ -31,18 +37,23 @@ while True:
     elif state=="e encode":
         io.output(encode.encode(input("please enter text")))
         try:
-            print(io.listen())
+            print(encode.decode(io.listen()))
         except KeyboardInterrupt:
             pass
     elif state=="call":
-        call=own_sign+"de"+t_sign+"k"
+        call=t_sign+"de"+own_sign+"k"
         io.output(encode.encode(call))
         try:
             reply=encode.decode(io.listen())
             de_loc=reply.find("de")
             rep=reply[de_loc+2:-1]+"de"+reply[:de_loc]+reply[-1]
             while rep!=call:
-                print("invalid reply "+reply)
+                if reply[:de_loc]==own_sign:
+                    if input("call from "+reply[de_loc+2:-1]+" accept? ")=="yes":
+                        state="listen"
+                        continue
+                else:
+                    print("invalid reply "+reply)
                 reply=encode.decode(io.listen())
                 de_loc=reply.find("de")
                 rep=reply[de_loc+2:-1]+"de"+reply[:de_loc]+reply[-1]
@@ -52,6 +63,11 @@ while True:
         print("valid callsign recieved")
         state="send"
         continue
+    elif state=="reply":
+        de_loc=reply.find("de")
+        rep=reply[de_loc+2:-1]+"de"+reply[:de_loc]+reply[-1]
+        io.output(encode.encode(rep))
+        state="recieve"
     elif state=="send":
         message=input("enter message")
         io.output(encode.encode(message))
