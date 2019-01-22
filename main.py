@@ -44,21 +44,24 @@ while True:
         call=t_sign+"de"+own_sign+"k"
         io.output(encode.encode(call))
         try:
-            reply=encode.decode(io.listen())
-            de_loc=reply.find("de")
-            rep=reply[de_loc+2:-1]+"de"+reply[:de_loc]+reply[-1]
-            while rep!=call:
-                if reply[:de_loc]==own_sign:
-                    if input("call from "+reply[de_loc+2:-1]+" accept? ")=="yes":
-                        state="listen"
-                        continue
-                else:
-                    print("invalid reply "+reply)
+            try:
                 reply=encode.decode(io.listen())
                 de_loc=reply.find("de")
                 rep=reply[de_loc+2:-1]+"de"+reply[:de_loc]+reply[-1]
-        except KeyboardInterrupt:
-            state="send"
+                while rep!=call:
+                    if reply[:de_loc]==own_sign:
+                        if input("call from "+reply[de_loc+2:-1]+" accept? ")=="yes":
+                            state="listen"
+                            raise GeneratorExit#an exeption that is almost never going to be used here
+                    else:
+                        print("invalid reply "+reply)
+                    reply=encode.decode(io.listen())
+                    de_loc=reply.find("de")
+                    rep=reply[de_loc+2:-1]+"de"+reply[:de_loc]+reply[-1]
+            except KeyboardInterrupt:
+                state="send"
+                continue
+        except GeneratorExit:
             continue
         print("valid callsign recieved")
         state="send"
